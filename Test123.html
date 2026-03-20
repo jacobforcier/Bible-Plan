@@ -1,0 +1,1391 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #ffffff}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #ffffff; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;title&gt;Chronological Bible Reading Plan&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1">* { box-sizing: border-box; margin: 0; padding: 0; }</span></p>
+<p class="p1"><span class="s1">body { font-family: 'Georgia', serif; background: #faf7f2; color: #2c1f0e; min-height: 100vh; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">/* HEADER */</span></p>
+<p class="p1"><span class="s1">header {</span></p>
+<p class="p1"><span class="s1">background: linear-gradient(135deg, #3b1f0a 0%, #6b3a1f 50%, #3b1f0a 100%);</span></p>
+<p class="p1"><span class="s1">color: #f5e6c8; text-align: center; padding: 28px 20px 0; position: relative; overflow: hidden;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">header::before { content: ‘✝’; position: absolute; font-size: 200px; opacity: 0.05; top: -30px; left: 50%; transform: translateX(-50%); }</span></p>
+<p class="p1"><span class="s1">header h1 { font-size: 1.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }</span></p>
+<p class="p1"><span class="s1">header p { font-size: 0.95em; opacity: 0.8; font-style: italic; margin-bottom: 16px; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">/* TABS */</span></p>
+<p class="p1"><span class="s1">.tabs { display: flex; justify-content: center; gap: 0; margin-top: 4px; }</span></p>
+<p class="p1"><span class="s1">.tab-btn {</span></p>
+<p class="p1"><span class="s1">background: rgba(255,255,255,0.12); color: #f5e6c8; border: none;</span></p>
+<p class="p1"><span class="s1">padding: 10px 36px; font-size: 1em; font-family: ‘Georgia’, serif;</span></p>
+<p class="p1"><span class="s1">cursor: pointer; letter-spacing: 1px; text-transform: uppercase;</span></p>
+<p class="p1"><span class="s1">border-radius: 8px 8px 0 0; transition: background 0.2s;</span></p>
+<p class="p1"><span class="s1">border-top: 2px solid transparent;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.tab-btn:hover { background: rgba(255,255,255,0.2); }</span></p>
+<p class="p1"><span class="s1">.tab-btn.active { background: #faf7f2; color: #3b1f0a; font-weight: bold; border-top: 2px solid #d4a96a; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">/* CONTROLS */</span></p>
+<p class="p1"><span class="s1">.controls {</span></p>
+<p class="p1"><span class="s1">display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;</span></p>
+<p class="p1"><span class="s1">background: #fff; border-bottom: 2px solid #d4a96a; padding: 12px 20px;</span></p>
+<p class="p1"><span class="s1">position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.controls label { font-size: 0.85em; color: #6b3a1f; font-weight: bold; }</span></p>
+<p class="p1"><span class="s1">.controls input[type=“date”] { border: 1px solid #d4a96a; border-radius: 6px; padding: 5px 8px; font-size: 0.85em; color: #2c1f0e; background: #faf7f2; }</span></p>
+<p class="p1"><span class="s1">.progress-wrap { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 160px; }</span></p>
+<p class="p1"><span class="s1">.progress-bar-bg { flex: 1; height: 12px; background: #e8dcc8; border-radius: 10px; overflow: hidden; }</span></p>
+<p class="p1"><span class="s1">.progress-bar-fill { height: 100%; background: linear-gradient(90deg, #6b3a1f, #d4a96a); border-radius: 10px; transition: width 0.4s ease; width: 0%; }</span></p>
+<p class="p1"><span class="s1">.progress-text { font-size: 0.82em; color: #6b3a1f; white-space: nowrap; font-weight: bold; }</span></p>
+<p class="p1"><span class="s1">.btn { background: #6b3a1f; color: #f5e6c8; border: none; border-radius: 6px; padding: 6px 14px; font-size: 0.82em; cursor: pointer; transition: background 0.2s; white-space: nowrap; }</span></p>
+<p class="p1"><span class="s1">.btn:hover { background: #3b1f0a; }</span></p>
+<p class="p1"><span class="s1">.btn.secondary { background: transparent; color: #6b3a1f; border: 1px solid #6b3a1f; }</span></p>
+<p class="p1"><span class="s1">.btn.secondary:hover { background: #f5e6c8; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">/* TAB PANELS */</span></p>
+<p class="p1"><span class="s1">.tab-panel { display: none; }</span></p>
+<p class="p1"><span class="s1">.tab-panel.active { display: block; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">/* SECTIONS */</span></p>
+<p class="p1"><span class="s1">.era-section { max-width: 960px; margin: 24px auto 0; padding: 0 16px; }</span></p>
+<p class="p1"><span class="s1">.era-header {</span></p>
+<p class="p1"><span class="s1">background: linear-gradient(135deg, #3b1f0a, #6b3a1f);</span></p>
+<p class="p1"><span class="s1">color: #f5e6c8; padding: 11px 16px; border-radius: 8px 8px 0 0;</span></p>
+<p class="p1"><span class="s1">font-size: 0.98em; letter-spacing: 0.5px; text-transform: uppercase;</span></p>
+<p class="p1"><span class="s1">display: flex; align-items: center; gap: 8px;</span></p>
+<p class="p1"><span class="s1">cursor: pointer; user-select: none; transition: opacity 0.15s;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.era-header:hover { opacity: 0.92; }</span></p>
+<p class="p1"><span class="s1">.era-header.collapsed { border-radius: 8px; }</span></p>
+<p class="p1"><span class="s1">.era-header .era-sub { opacity: 0.65; font-size: 0.76em; font-style: italic; text-transform: none; letter-spacing: 0; }</span></p>
+<p class="p1"><span class="s1">.era-header .era-chevron { font-size: 0.8em; transition: transform 0.25s; flex-shrink: 0; }</span></p>
+<p class="p1"><span class="s1">.era-header.collapsed .era-chevron { transform: rotate(-90deg); }</span></p>
+<p class="p1"><span class="s1">.era-reset-btn {</span></p>
+<p class="p1"><span class="s1">background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);</span></p>
+<p class="p1"><span class="s1">color: #f5e6c8; border-radius: 5px; padding: 2px 6px; font-size: 0.82em;</span></p>
+<p class="p1"><span class="s1">cursor: pointer; flex-shrink: 0; transition: background 0.2s; line-height: 1.4;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.era-reset-btn:hover { background: rgba(255,255,255,0.3); }</span></p>
+<p class="p1"><span class="s1">.era-check {</span></p>
+<p class="p1"><span class="s1">width: 18px; height: 18px; flex-shrink: 0; cursor: pointer;</span></p>
+<p class="p1"><span class="s1">accent-color: #d4a96a; margin: 0;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.days-grid {</span></p>
+<p class="p1"><span class="s1">background: #fff; border: 1px solid #d4a96a; border-top: none;</span></p>
+<p class="p1"><span class="s1">border-radius: 0 0 8px 8px; overflow: hidden; margin-bottom: 4px;</span></p>
+<p class="p1"><span class="s1">max-height: 9999px; transition: max-height 0.3s ease;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.days-grid.collapsed { max-height: 0 !important; border: none; }</span></p>
+<p class="p1"><span class="s1">.day-row {</span></p>
+<p class="p1"><span class="s1">display: flex; align-items: flex-start; padding: 9px 14px;</span></p>
+<p class="p1"><span class="s1">border-bottom: 1px solid #f0e8d8; cursor: pointer; gap: 12px; transition: background 0.15s;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.day-row:last-child { border-bottom: none; }</span></p>
+<p class="p1"><span class="s1">.day-row:hover { background: #fdf5e8; }</span></p>
+<p class="p1"><span class="s1">.day-row.completed { background: #f0faf0; }</span></p>
+<p class="p1"><span class="s1">.day-row.completed .reading { color: #999; text-decoration: line-through; }</span></p>
+<p class="p1"><span class="s1">.day-row.today { background: #fff8e8; border-left: 4px solid #d4a96a; }</span></p>
+<p class="p1"><span class="s1">.day-row input[type=“checkbox”] { width: 18px; height: 18px; accent-color: #6b3a1f; cursor: pointer; flex-shrink: 0; margin-top: 2px; }</span></p>
+<p class="p1"><span class="s1">.day-num { font-weight: bold; color: #6b3a1f; min-width: 30px; font-size: 0.83em; padding-top: 2px; }</span></p>
+<p class="p1"><span class="s1">.day-date { font-size: 0.76em; color: #a07040; min-width: 100px; font-style: italic; padding-top: 3px; }</span></p>
+<p class="p1"><span class="s1">.reading { font-size: 0.92em; flex: 1; line-height: 1.5; }</span></p>
+<p class="p1"><span class="s1">.reading .passage { display: block; }</span></p>
+<p class="p1"><span class="s1">.reading .note { display: block; font-size: 0.8em; color: #a07040; font-style: italic; margin-top: 2px; }</span></p>
+<p class="p1"><span class="s1">.today-badge { background: #d4a96a; color: #fff; font-size: 0.68em; padding: 2px 7px; border-radius: 10px; font-weight: bold; text-transform: uppercase; white-space: nowrap; margin-top: 3px; flex-shrink: 0; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">footer { text-align: center; padding: 36px 20px; color: #a07040; font-size: 0.83em; font-style: italic; max-width: 960px; margin: 0 auto; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">/* MODAL */</span></p>
+<p class="p1"><span class="s1">.modal-overlay {</span></p>
+<p class="p1"><span class="s1">display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);</span></p>
+<p class="p1"><span class="s1">z-index: 1000; align-items: center; justify-content: center;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.modal-overlay.active { display: flex; }</span></p>
+<p class="p1"><span class="s1">.modal-box {</span></p>
+<p class="p1"><span class="s1">background: #fff; border-radius: 14px; padding: 28px 24px 20px;</span></p>
+<p class="p1"><span class="s1">max-width: 320px; width: 90%; text-align: center;</span></p>
+<p class="p1"><span class="s1">box-shadow: 0 8px 32px rgba(0,0,0,0.25);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.modal-box h3 { font-size: 1.1em; color: #3b1f0a; margin-bottom: 10px; }</span></p>
+<p class="p1"><span class="s1">.modal-box p { font-size: 0.9em; color: #6b4020; margin-bottom: 22px; line-height: 1.5; }</span></p>
+<p class="p1"><span class="s1">.modal-btns { display: flex; gap: 10px; }</span></p>
+<p class="p1"><span class="s1">.modal-btns button { flex: 1; padding: 10px; border-radius: 8px; font-size: 0.9em; cursor: pointer; border: none; }</span></p>
+<p class="p1"><span class="s1">.modal-cancel { background: #e8dcc8; color: #3b1f0a; }</span></p>
+<p class="p1"><span class="s1">.modal-confirm { background: #6b3a1f; color: #fff; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">/* ── DARK MODE ── */</span></p>
+<p class="p1"><span class="s1">body.dark { background: #1a1208; color: #e8d5b0; }</span></p>
+<p class="p1"><span class="s1">body.dark header { background: linear-gradient(135deg, #0d0804 0%, #2a1508 50%, #0d0804 100%); }</span></p>
+<p class="p1"><span class="s1">body.dark .tab-btn.active { background: #1a1208; color: #e8d5b0; }</span></p>
+<p class="p1"><span class="s1">body.dark .tab-btn { color: #e8d5b0; }</span></p>
+<p class="p1"><span class="s1">body.dark .controls { background: #221608; border-bottom-color: #8b6530; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }</span></p>
+<p class="p1"><span class="s1">body.dark .controls label { color: #d4a96a; }</span></p>
+<p class="p1"><span class="s1">body.dark .controls input[type=“date”] { background: #2e1e0a; border-color: #8b6530; color: #e8d5b0; color-scheme: dark; }</span></p>
+<p class="p1"><span class="s1">body.dark #otPaceLabel, body.dark #ntPaceLabel { color: #8b6530; }</span></p>
+<p class="p1"><span class="s1">body.dark .progress-bar-bg { background: #3a2510; }</span></p>
+<p class="p1"><span class="s1">body.dark .progress-text { color: #d4a96a; }</span></p>
+<p class="p1"><span class="s1">body.dark .btn { background: #8b6530; color: #fff; }</span></p>
+<p class="p1"><span class="s1">body.dark .btn:hover { background: #a07840; }</span></p>
+<p class="p1"><span class="s1">body.dark .btn.secondary { background: transparent; color: #d4a96a; border-color: #8b6530; }</span></p>
+<p class="p1"><span class="s1">body.dark .btn.secondary:hover { background: #2e1e0a; }</span></p>
+<p class="p1"><span class="s1">body.dark .era-header { background: linear-gradient(135deg, #0d0804, #2a1508); }</span></p>
+<p class="p1"><span class="s1">body.dark .days-grid { background: #1e1408; border-color: #4a3018; }</span></p>
+<p class="p1"><span class="s1">body.dark .day-row { border-bottom-color: #2e2010; }</span></p>
+<p class="p1"><span class="s1">body.dark .day-row:hover { background: #2a1c0c; }</span></p>
+<p class="p1"><span class="s1">body.dark .day-row.completed { background: #0e1e0e; }</span></p>
+<p class="p1"><span class="s1">body.dark .day-row.completed .reading { color: #557755; }</span></p>
+<p class="p1"><span class="s1">body.dark .day-row.today { background: #2a2008; border-left-color: #d4a96a; }</span></p>
+<p class="p1"><span class="s1">body.dark .day-num { color: #d4a96a; }</span></p>
+<p class="p1"><span class="s1">body.dark .day-date { color: #8b6530; }</span></p>
+<p class="p1"><span class="s1">body.dark .reading .note { color: #8b6530; }</span></p>
+<p class="p1"><span class="s1">body.dark footer { color: #6b4a28; }</span></p>
+<p class="p1"><span class="s1">body.dark .modal-box { background: #221608; }</span></p>
+<p class="p1"><span class="s1">body.dark .modal-box h3 { color: #e8d5b0; }</span></p>
+<p class="p1"><span class="s1">body.dark .modal-box p { color: #c4a070; }</span></p>
+<p class="p1"><span class="s1">body.dark .modal-cancel { background: #3a2510; color: #e8d5b0; }</span></p>
+<p class="p1"><span class="s1">body.dark .modal-confirm { background: #8b6530; color: #fff; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">/* ── FINISH DATE BANNER ── */</span></p>
+<p class="p1"><span class="s1">.finish-banner {</span></p>
+<p class="p1"><span class="s1">max-width: 960px; margin: 12px auto 0; padding: 0 16px;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.finish-banner-inner {</span></p>
+<p class="p1"><span class="s1">background: linear-gradient(90deg, #f5efe4, #fdf8f0);</span></p>
+<p class="p1"><span class="s1">border: 1px solid #d4a96a; border-radius: 8px;</span></p>
+<p class="p1"><span class="s1">padding: 10px 18px; display: flex; align-items: center;</span></p>
+<p class="p1"><span class="s1">gap: 10px; flex-wrap: wrap;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">body.dark .finish-banner-inner {</span></p>
+<p class="p1"><span class="s1">background: linear-gradient(90deg, #2a1c0c, #221608);</span></p>
+<p class="p1"><span class="s1">border-color: #8b6530;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.finish-banner-inner .finish-icon { font-size: 1.2em; flex-shrink: 0; }</span></p>
+<p class="p1"><span class="s1">.finish-banner-inner .finish-text { font-size: 0.85em; color: #6b3a1f; flex: 1; line-height: 1.5; }</span></p>
+<p class="p1"><span class="s1">body.dark .finish-banner-inner .finish-text { color: #d4a96a; }</span></p>
+<p class="p1"><span class="s1">.finish-banner-inner .finish-date { font-weight: bold; color: #3b1f0a; }</span></p>
+<p class="p1"><span class="s1">body.dark .finish-banner-inner .finish-date { color: #f5e6c8; }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">/* dark mode toggle button in header */</span></p>
+<p class="p1"><span class="s1">.dark-toggle {</span></p>
+<p class="p1"><span class="s1">position: absolute; top: 16px; right: 16px;</span></p>
+<p class="p1"><span class="s1">background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);</span></p>
+<p class="p1"><span class="s1">color: #f5e6c8; border-radius: 20px; padding: 5px 12px;</span></p>
+<p class="p1"><span class="s1">font-size: 0.82em; cursor: pointer; transition: background 0.2s;</span></p>
+<p class="p1"><span class="s1">z-index: 10;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">.dark-toggle:hover { background: rgba(255,255,255,0.25); }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">@media (max-width: 600px) { .day-date { display: none; } .tab-btn { padding: 10px 20px; font-size: 0.9em; } }</span></p>
+<p class="p1"><span class="s1">@media print { .controls { display: none; } .tabs { display: none; } .day-row { page-break-inside: avoid; } }</span></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;header&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;button class="dark-toggle" onclick="toggleDark()" id="darkBtn"&gt;🌙 Dark&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;h1&gt;Chronological Bible Reading Plan&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;p&gt;Read the entire Bible in the order events occurred&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;div class="tabs"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;button class="tab-btn active" onclick="switchTab('ot')"&gt;📜 Old Testament&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;button class="tab-btn" onclick="switchTab('nt')"&gt;✝ New Testament&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/header&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- OT CONTROLS --&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="controls" id="ot-controls"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;label for="otStartDate"&gt;Start:&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;input type="date" id="otStartDate" value="2026-03-20"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;label for="otEndDate" style="margin-left:6px;"&gt;Finish by:&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;input type="date" id="otEndDate" placeholder="optional"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;span id="otPaceLabel" style="font-size:0.78em;color:#a07040;font-style:italic;"&gt;&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;div class="progress-wrap"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;div class="progress-bar-bg"&gt;&lt;div class="progress-bar-fill" id="otProgressFill"&gt;&lt;/div&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;span class="progress-text" id="otProgressText"&gt;0 / 250&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;button class="btn secondary" onclick="uncheckAllOT()"&gt;Reset&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;button class="btn" onclick="jumpToCurrentOT()"&gt;▶ Up Next&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;button class="btn" onclick="window.print()"&gt;🖨 Print&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- NT CONTROLS --&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="controls" id="nt-controls" style="display:none;"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;label for="ntStartDate"&gt;Start:&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;input type="date" id="ntStartDate" value="2026-03-20"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;label for="ntEndDate" style="margin-left:6px;"&gt;Finish by:&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;input type="date" id="ntEndDate" placeholder="optional"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;span id="ntPaceLabel" style="font-size:0.78em;color:#a07040;font-style:italic;"&gt;&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;div class="progress-wrap"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;div class="progress-bar-bg"&gt;&lt;div class="progress-bar-fill" id="ntProgressFill"&gt;&lt;/div&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;span class="progress-text" id="ntProgressText"&gt;0 / 180&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;button class="btn secondary" onclick="uncheckAllNT()"&gt;Reset&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;button class="btn" onclick="jumpToCurrentNT()"&gt;▶ Up Next&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;button class="btn" onclick="window.print()"&gt;🖨 Print&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="finish-banner" id="ot-finish-banner"&gt;&lt;div class="finish-banner-inner"&gt;&lt;span class="finish-icon"&gt;📅&lt;/span&gt;&lt;span class="finish-text" id="ot-finish-text"&gt;Loading...&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- OT PANEL --&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="tab-panel active" id="ot-panel"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;div id="otPlanContainer"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;footer&gt;"In the beginning, God created the heavens and the earth." — Genesis 1:1&lt;br&gt;&lt;br&gt;May this journey through the Old Testament deepen your wonder at God's faithfulness.&lt;/footer&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="finish-banner" id="nt-finish-banner" style="display:none"&gt;&lt;div class="finish-banner-inner"&gt;&lt;span class="finish-icon"&gt;📅&lt;/span&gt;&lt;span class="finish-text" id="nt-finish-text"&gt;Loading...&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- NT PANEL --&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="tab-panel" id="nt-panel"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;div id="ntPlanContainer"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;footer&gt;"Your word is a lamp to my feet and a light to my path." — Psalm 119:105&lt;br&gt;&lt;br&gt;May this journey through the New Testament deepen your faith and renew your spirit.&lt;/footer&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- MODAL --&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="modal-overlay" id="confirmModal"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;div class="modal-box"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;h3 id="modalTitle"&gt;Are you sure?&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;p id="modalMessage"&gt;This cannot be undone.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;div class="modal-btns"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>&lt;button class="modal-cancel" id="modalCancel"&gt;Cancel&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>&lt;button class="modal-confirm" id="modalConfirm"&gt;Reset&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p1"><span class="s1">// ─── TAB SWITCHING ────────────────────────────────────────────────────────────</span></p>
+<p class="p1"><span class="s1">function switchTab(tab) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.querySelectorAll('.tab-btn').forEach((b,i) =&gt; b.classList.toggle('active', (i===0&amp;&amp;tab==='ot')||(i===1&amp;&amp;tab==='nt')));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('ot-panel').classList.toggle('active', tab==='ot');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('nt-panel').classList.toggle('active', tab==='nt');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('ot-controls').style.display = tab==='ot' ? '' : 'none';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('nt-controls').style.display = tab==='nt' ? '' : 'none';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('ot-finish-banner').style.display = tab==='ot' ? '' : 'none';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('nt-finish-banner').style.display = tab==='nt' ? '' : 'none';</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// ─── SHARED UTILS ─────────────────────────────────────────────────────────────</span></p>
+<p class="p1"><span class="s1">function addDays(date, n) { const d = new Date(date); d.setDate(d.getDate()+n); return d; }</span></p>
+<p class="p1"><span class="s1">function formatDate(date) { return date.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}); }</span></p>
+<p class="p1"><span class="s1">function getDate(id) { const v=document.getElementById(id).value; const [y,m,d]=v.split('-').map(Number); return new Date(y,m-1,d); }</span></p>
+<p class="p1"><span class="s1">function loadChecked(key) { try { return JSON.parse(localStorage.getItem(key)||'{}'); } catch { return {}; } }</span></p>
+<p class="p1"><span class="s1">function saveChecked(key,obj) { try { localStorage.setItem(key,JSON.stringify(obj)); } catch {} }</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// ─── SCHEDULE CALCULATOR ──────────────────────────────────────────────────────</span></p>
+<p class="p1"><span class="s1">// Returns an array of Date objects, one per reading, spread between start and end.</span></p>
+<p class="p1"><span class="s1">// If endDate is null, one reading per calendar day (original behaviour).</span></p>
+<p class="p1"><span class="s1">// If endDate is set, readings are distributed evenly; some days get 2+ readings.</span></p>
+<p class="p1"><span class="s1">function computeSchedule(plan, startDate, endDate) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let total = 0; plan.forEach(e =&gt; total += e.days.length);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const dates = [];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (!endDate || endDate &lt;= startDate) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>// Default: 1 reading per day</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>for (let i = 0; i &lt; total; i++) dates.push(addDays(startDate, i));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>return dates;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const start = new Date(startDate); start.setHours(0,0,0,0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const end <span class="Apple-converted-space">  </span>= new Date(endDate); <span class="Apple-converted-space">  </span>end.setHours(0,0,0,0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const totalDays = Math.round((end - start) / 86400000) + 1; // inclusive</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (totalDays &gt;= total) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>// Spread evenly — some days get 1, some get 2</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>for (let i = 0; i &lt; total; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const dayOffset = Math.floor(i * totalDays / total);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>dates.push(addDays(startDate, dayOffset));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>// More readings than days — group multiple readings per day</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>for (let i = 0; i &lt; total; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const dayOffset = Math.min(Math.floor(i * totalDays / total), totalDays - 1);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>dates.push(addDays(startDate, dayOffset));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>return dates;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// Returns a human-readable pace string e.g. "~2 readings/day"</span></p>
+<p class="p1"><span class="s1">function paceLabel(plan, startDate, endDate) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (!endDate || endDate &lt;= startDate) return '';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let total = 0; plan.forEach(e =&gt; total += e.days.length);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const start = new Date(startDate); start.setHours(0,0,0,0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const end <span class="Apple-converted-space">  </span>= new Date(endDate); <span class="Apple-converted-space">  </span>end.setHours(0,0,0,0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const totalDays = Math.max(1, Math.round((end - start) / 86400000) + 1);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const rate = total / totalDays;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (rate &lt;= 1) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const daysPerReading = Math.round(totalDays / total);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>return daysPerReading &lt;= 1 ? '1 reading/day' : '1 reading every ' + daysPerReading + ' days';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>return '~' + rate.toFixed(1).replace(/\.0$/,'') + ' readings/day';</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// ─── MODAL ────────────────────────────────────────────────────────────────────</span></p>
+<p class="p1"><span class="s1">function showModal(title, message, onConfirm) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const overlay = document.getElementById('confirmModal');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('modalTitle').textContent = title;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('modalMessage').textContent = message;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>overlay.classList.add('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const confirmBtn = document.getElementById('modalConfirm');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const cancelBtn = document.getElementById('modalCancel');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>function cleanup() { overlay.classList.remove('active'); confirmBtn.replaceWith(confirmBtn.cloneNode(true)); cancelBtn.replaceWith(cancelBtn.cloneNode(true)); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('modalConfirm').addEventListener('click', function() { cleanup(); onConfirm(); }, {once:true});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('modalCancel').addEventListener('click', function() { cleanup(); }, {once:true});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>overlay.addEventListener('click', function(e) { if(e.target===overlay) cleanup(); }, {once:true});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// ─── PLAN RENDERER (shared engine) ───────────────────────────────────────────</span></p>
+<p class="p1"><span class="s1">function renderPlan(plan, checkedObj, storageKey, startDate, containerId, fillId, textId, schedule) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const container = document.getElementById(containerId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>container.innerHTML = '';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let dayIndex = 0;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>// Find first unchecked era</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let currentEraIdx = plan.length - 1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let scan = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>outer: for (let si = 0; si &lt; plan.length; si++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>for (let di = 0; di &lt; plan[si].days.length; di++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>if (!checkedObj['day_'+scan]) { currentEraIdx = si; break outer; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>scan++;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let currentRowEl = null;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>plan.forEach((era, si) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const section = document.createElement('div');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>section.className = 'era-section';</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>let eraStart = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>for (let i = 0; i &lt; si; i++) eraStart += plan[i].days.length;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const eraTotal = era.days.length;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const eraDone = era.days.filter((_,di) =&gt; !!checkedObj['day_'+(eraStart+di)]).length;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const isOpen = si === currentEraIdx;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const header = document.createElement('div');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>header.className = 'era-header' + (isOpen ? '' : ' collapsed');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>header.innerHTML =</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>'&lt;span style="flex:1;display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0"&gt;' +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>'&lt;span&gt;&lt;span class="era-icon"&gt;' + (eraDone===eraTotal ? '✅' : '✝') + '&lt;/span&gt; ' + era.era + '&lt;/span&gt;' +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>'&lt;span class="era-sub"&gt;' + era.sub + '&lt;/span&gt;' +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>'&lt;/span&gt;' +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>'&lt;span style="display:flex;align-items:center;gap:6px;flex-shrink:0"&gt;' +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>'&lt;span class="era-count" style="font-size:0.72em;opacity:0.75;font-style:italic"&gt;' + eraDone + '/' + eraTotal + '&lt;/span&gt;' +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>'&lt;input type="checkbox" class="era-check" title="Check/uncheck all in this section"' + (eraDone===eraTotal ? ' checked' : '') + '&gt;' +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>'&lt;button class="era-reset-btn" title="Reset section"&gt;↺&lt;/button&gt;' +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>'&lt;span class="era-chevron"&gt;▼&lt;/span&gt;' +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>'&lt;/span&gt;';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>section.appendChild(header);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const grid = document.createElement('div');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>grid.className = 'days-grid' + (isOpen ? '' : ' collapsed');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>// Compute the global index of the first unchecked day in this era (once, outside the loop)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const eraFirstUncheckedLocal = era.days.findIndex((_,di) =&gt; !checkedObj['day_'+(eraStart+di)]);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const eraFirstUncheckedGlobal = eraFirstUncheckedLocal === -1 ? -1 : eraStart + eraFirstUncheckedLocal;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>era.days.forEach(d =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const globalIdx = dayIndex;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const key = 'day_' + globalIdx;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const date = (schedule &amp;&amp; schedule[globalIdx]) ? schedule[globalIdx] : addDays(startDate, globalIdx);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const isNext = (globalIdx === eraFirstUncheckedGlobal) &amp;&amp; (si === currentEraIdx);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const row = document.createElement('div');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>row.className = 'day-row' + (checkedObj[key] ? ' completed' : '') + (isNext ? ' today' : '');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>if (isNext &amp;&amp; !currentRowEl) currentRowEl = row;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const cb = document.createElement('input');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>cb.type = 'checkbox';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>cb.checked = !!checkedObj[key];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>cb.addEventListener('change', function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>checkedObj[key] = this.checked;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>saveChecked(storageKey, checkedObj);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>row.classList.toggle('completed', this.checked);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>const newDone = era.days.filter((_,di) =&gt; !!checkedObj['day_'+(eraStart+di)]).length;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>header.querySelector('.era-icon').textContent = newDone === eraTotal ? '✅' : '✝';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>header.querySelector('.era-count').textContent = newDone + '/' + eraTotal;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>// Keep section checkbox in sync</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>const secCb = header.querySelector('.era-check');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>if (secCb) secCb.checked = (newDone === eraTotal);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>updateProgressBar(checkedObj, plan, fillId, textId, schedule);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const numEl = document.createElement('div');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>numEl.className = 'day-num';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>numEl.textContent = globalIdx + 1;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const dateEl = document.createElement('div');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>dateEl.className = 'day-date';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>dateEl.textContent = formatDate(date);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const readEl = document.createElement('div');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>readEl.className = 'reading';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>readEl.innerHTML = '&lt;span class="passage"&gt;' + d.r + '&lt;/span&gt;&lt;span class="note"&gt;' + d.n + '&lt;/span&gt;';</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>row.appendChild(cb); row.appendChild(numEl); row.appendChild(dateEl); row.appendChild(readEl);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>row.addEventListener('click', function(e) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>if (e.target === cb) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>cb.checked = !cb.checked;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>cb.dispatchEvent(new Event('change'));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>grid.appendChild(row);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>dayIndex++;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>// Section checkbox — check/uncheck all readings in this section</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const sectionCb = header.querySelector('.era-check');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>sectionCb.addEventListener('change', function(e) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>e.stopPropagation();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const checkAll = this.checked;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>// Update all row checkboxes and checkedObj</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const rows = grid.querySelectorAll('.day-row');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>rows.forEach((row, di) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>const key = 'day_' + (eraStart + di);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>checkedObj[key] = checkAll;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>row.classList.toggle('completed', checkAll);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>row.querySelector('input[type=checkbox]').checked = checkAll;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>saveChecked(storageKey, checkedObj);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>header.querySelector('.era-icon').textContent = checkAll ? '✅' : '✝';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>header.querySelector('.era-count').textContent = (checkAll ? eraTotal : 0) + '/' + eraTotal;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>updateProgressBar(checkedObj, plan, fillId, textId, schedule);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>// Reset section button</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const resetBtn = header.querySelector('.era-reset-btn');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>resetBtn.addEventListener('click', function(e) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>e.stopPropagation(); e.preventDefault();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>showModal('Reset This Section?', 'All readings in this section will be unchecked.', function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>for (let di = 0; di &lt; eraTotal; di++) delete checkedObj['day_'+(eraStart+di)];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>saveChecked(storageKey, checkedObj);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>// Re-render via top-level render so schedule is recomputed</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>if (containerId === 'otPlanContainer') renderOT();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">       </span>else renderNT();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>// Collapse toggle — exclude both sectionCb and resetBtn</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>header.addEventListener('click', function(e) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>if (e.target === resetBtn || resetBtn.contains(e.target)) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>if (e.target === sectionCb) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const closing = !grid.classList.contains('collapsed');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>grid.classList.toggle('collapsed', closing);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>header.classList.toggle('collapsed', closing);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>section.appendChild(grid);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>container.appendChild(section);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>updateProgressBar(checkedObj, plan, fillId, textId);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (currentRowEl) setTimeout(() =&gt; currentRowEl.scrollIntoView({behavior:'smooth',block:'center'}), 150);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function updateProgressBar(checkedObj, plan, fillId, textId, schedule) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let total = 0; plan.forEach(e =&gt; total += e.days.length);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const count = Object.keys(checkedObj).filter(k =&gt; !!checkedObj[k]).length;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById(fillId).style.width = (count/total*100) + '%';</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>// Show "X / Y readings" — if schedule compresses into fewer days, note that</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const isOT = fillId === 'otProgressFill';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const endDateEl = document.getElementById(isOT ? 'otEndDate' : 'ntEndDate');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const endVal = endDateEl &amp;&amp; endDateEl.value;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let dayCount = total; // default: 1 reading per day</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (endVal &amp;&amp; schedule &amp;&amp; schedule.length) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>// Count unique dates in the schedule</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const uniqueDates = new Set(schedule.map(d =&gt; d.toDateString()));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>dayCount = uniqueDates.size;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const readingsLabel = count + ' / ' + total + ' readings';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const daysLabel = dayCount !== total ? ' (' + dayCount + ' days)' : '';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById(textId).textContent = readingsLabel + daysLabel;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>// Determine finish date banner IDs based on which plan this is</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const finishId = isOT ? 'ot-finish-text' : 'nt-finish-text';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const startDateId = isOT ? 'otStartDate' : 'ntStartDate';</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const startDate = getDate(startDateId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const finishEl = document.getElementById(finishId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (!finishEl) return;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (count === 0) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const endDateEl2 = document.getElementById(isOT ? 'otEndDate' : 'ntEndDate');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const endVal2 = endDateEl2 &amp;&amp; endDateEl2.value;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>let endDisplay;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>if (endVal2) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const [ey,em,ed] = endVal2.split('-').map(Number);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>endDisplay = new Date(ey,em-1,ed);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>endDisplay = addDays(startDate, total - 1);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>finishEl.innerHTML = 'Target finish: &lt;span class="finish-date"&gt;' + endDisplay.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) + '&lt;/span&gt;';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (count &gt;= total) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>finishEl.innerHTML = '🎉 &lt;span class="finish-date"&gt;Plan complete!&lt;/span&gt; Well done — you have read through the ' + (isOT ? 'Old' : 'New') + ' Testament!';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>// Find the date of the first unchecked day to estimate pace</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>// Days elapsed = index of first unchecked day</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let firstUnchecked = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let idx = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>for (let si = 0; si &lt; plan.length; si++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>for (let di = 0; di &lt; plan[si].days.length; di++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>if (!checkedObj['day_'+idx]) { firstUnchecked = idx; break; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>idx++;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>if (idx !== firstUnchecked || firstUnchecked &gt; 0) break;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>// Find actual first unchecked</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>firstUnchecked = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>for (let i = 0; i &lt; total; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>if (!checkedObj['day_'+i]) { firstUnchecked = i; break; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const today = new Date();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>today.setHours(0,0,0,0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const start = new Date(startDate);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>start.setHours(0,0,0,0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const daysElapsed = Math.max(1, Math.round((today - start) / 86400000));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const pace = count / daysElapsed; // readings per day</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const remaining = total - count;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (pace &lt;= 0) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const endDateEl = document.getElementById(isOT ? 'otEndDate' : 'ntEndDate');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const endDateVal = endDateEl &amp;&amp; endDateEl.value;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let onTrackFinish;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (endDateVal) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const [ey,em,ed] = endDateVal.split('-').map(Number);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>onTrackFinish = new Date(ey, em-1, ed);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>onTrackFinish = addDays(startDate, total - 1);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>finishEl.innerHTML = 'On track to finish: &lt;span class="finish-date"&gt;' + onTrackFinish.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) + '&lt;/span&gt;';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const daysLeft = Math.ceil(remaining / pace);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const projectedFinish = addDays(today, daysLeft);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const onTrackFinish = addDays(startDate, total - 1);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const isAhead = projectedFinish &lt;= onTrackFinish;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const diffDays = Math.abs(Math.round((projectedFinish - onTrackFinish) / 86400000));</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let statusText = '';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (diffDays === 0) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>statusText = 'You are right on track!';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>} else if (isAhead) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>statusText = diffDays + ' day' + (diffDays===1?'':'s') + ' ahead of schedule ✨';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>statusText = diffDays + ' day' + (diffDays===1?'':'s') + ' behind — keep going!';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>finishEl.innerHTML =</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>Math.round(count/total*100) + '% complete &amp;mdash; ' + statusText +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>' Estimated finish: &lt;span class="finish-date"&gt;' +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>projectedFinish.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) +</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>'&lt;/span&gt;';</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// ── DARK MODE ──</span></p>
+<p class="p1"><span class="s1">function toggleDark() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const isDark = document.body.classList.toggle('dark');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('darkBtn').textContent = isDark ? '☀️ Light' : '🌙 Dark';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>try { localStorage.setItem('bible_dark_mode', isDark ? '1' : '0'); } catch {}</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">// Restore dark mode preference</span></p>
+<p class="p1"><span class="s1">try {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (localStorage.getItem('bible_dark_mode') === '1') {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>document.body.classList.add('dark');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>document.addEventListener('DOMContentLoaded', () =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const btn = document.getElementById('darkBtn');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>if (btn) btn.textContent = '☀️ Light';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p1"><span class="s1">} catch {}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// ─── OT DATA ─────────────────────────────────────────────────────────────────</span></p>
+<p class="p1"><span class="s1">const otPlan = [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Creation &amp; the Fall", sub: "Genesis 1–3", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 1:1–2:3", n: "The six days of creation; God rests" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 2:4–25", n: "The Garden of Eden; man and woman" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 3", n: "The Fall; curse and promise of redemption" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "From Adam to Noah", sub: "Genesis 4–9", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 4", n: "Cain and Abel; Cain's descendants" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 5", n: "Genealogy from Adam to Noah" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 6", n: "Wickedness of man; God commissions the ark" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 7", n: "The flood begins; Noah enters the ark" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 8", n: "Waters recede; Noah leaves the ark" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 9", n: "God's covenant with Noah; the rainbow" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Tower of Babel &amp; Nations", sub: "Genesis 10–11", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 10", n: "Table of nations; descendants of Noah's sons" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 11", n: "Tower of Babel; genealogy to Abram" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Abraham — Father of Faith", sub: "Genesis 12–25", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 12", n: "God calls Abram; journey to Canaan" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 13–14", n: "Abram and Lot separate; war of kings; Melchizedek" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 15", n: "God's covenant with Abram; promised heir" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 16", n: "Hagar and Ishmael" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 17", n: "Covenant of circumcision; Abram renamed Abraham" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 18", n: "Three visitors; Abraham intercedes for Sodom" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 19", n: "Sodom destroyed; Lot rescued" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 20–21", n: "Abraham and Abimelech; birth of Isaac" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 22", n: "The binding of Isaac — the great test of faith" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 23–24", n: "Sarah's death; Isaac and Rebekah" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 25", n: "Abraham's death; Esau sells his birthright" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Job — Suffering &amp; Sovereignty", sub: "Likely set in the Patriarchal era", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 1–2", n: "Job's suffering begins; the heavenly council" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 3–4", n: "Job's lament; Eliphaz's first speech" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 5–7", n: "Eliphaz continues; Job replies" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 8–10", n: "Bildad's speech; Job's response" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 11–13", n: "Zophar speaks; Job defends his integrity" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 14–16", n: "Job on death and hope; Eliphaz's second speech" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 17–19", n: "Job's despair; 'I know my Redeemer lives'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 20–22", n: "Zophar and Bildad's second speeches; Eliphaz third" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 23–25", n: "Job seeks God; Bildad's third speech" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 26–28", n: "Job's response; poem on wisdom" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 29–31", n: "Job's final defense and oath" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 32–34", n: "Elihu speaks" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 35–37", n: "Elihu continues" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 38–39", n: "God speaks from the whirlwind — creation's wonders" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Job 40–42", n: "God's second speech; Job restored" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Isaac, Jacob &amp; Joseph", sub: "Genesis 26–50", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 26", n: "Isaac in Gerar; covenant renewed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 27–28", n: "Jacob steals the blessing; ladder to heaven" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 29–30", n: "Jacob, Leah, and Rachel; twelve sons born" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 31–32", n: "Jacob flees Laban; wrestles with God" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 33–35", n: "Jacob meets Esau; Israel named; Rachel dies" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 36–37", n: "Esau's descendants; Joseph sold into slavery" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 38–39", n: "Judah and Tamar; Joseph and Potiphar's wife" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 40–41", n: "Joseph interprets dreams; exalted in Egypt" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 42–43", n: "Brothers come to Egypt; Benjamin brought" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 44–45", n: "Judah's plea; Joseph reveals himself" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 46–47", n: "Jacob moves to Egypt; settles in Goshen" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 48–49", n: "Jacob blesses his sons; Judah's royal line" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Genesis 50", n: "Jacob and Joseph's deaths; 'God meant it for good'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Moses &amp; the Exodus", sub: "Exodus 1–18", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 1–2", n: "Israel enslaved; Moses born and called" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 3–4", n: "The burning bush; God's name revealed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 5–6", n: "Pharaoh refuses; God renews his promise" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 7–8", n: "Plagues begin: water to blood, frogs, gnats, flies" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 9", n: "Plagues: livestock, boils, hail" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 10–11", n: "Locusts, darkness, death announced" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 12", n: "The Passover instituted; Israel departs Egypt" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 13–14", n: "Pillar of cloud; crossing the Red Sea" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 15", n: "Song of Moses; Miriam's song; bitter water sweetened" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 16–17", n: "Manna and quail; water from the rock" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 18", n: "Jethro's advice; delegation of leadership" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "The Law at Sinai", sub: "Exodus 19–40", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 19–20", n: "God descends on Sinai; the Ten Commandments" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 21–22", n: "Laws on servants, violence, and property" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 23–24", n: "Festival laws; covenant confirmed with blood" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 25–27", n: "Instructions for the tabernacle and furnishings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 28–29", n: "Priestly garments; ordination of Aaron" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 30–31", n: "Altar of incense; Sabbath; Bezalel commissioned" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 32", n: "The golden calf; Moses intercedes" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 33–34", n: "God's glory shown to Moses; covenant renewed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 35–36", n: "Tabernacle materials gathered; construction begins" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 37–38", n: "Ark, table, lampstand, and altar built" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Exodus 39–40", n: "Priestly garments; tabernacle erected; glory fills it" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Leviticus — Holiness &amp; Worship", sub: "Leviticus", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 1–3", n: "Burnt, grain, and fellowship offerings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 4–5", n: "Sin and guilt offerings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 6–7", n: "Instructions for priests; portions of offerings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 8–9", n: "Ordination of Aaron and sons; first offerings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 10", n: "Nadab and Abihu; unauthorized fire" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 11–12", n: "Clean and unclean foods; purification after birth" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 13–14", n: "Skin diseases; purification rites" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 15–16", n: "Bodily discharges; the Day of Atonement" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 17–18", n: "Blood laws; sexual holiness" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 19–20", n: "'Be holy for I am holy'; love your neighbor" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 21–22", n: "Holiness for priests; acceptable offerings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 23–24", n: "Sacred festivals; the calendar of worship" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 25", n: "Sabbath year; Year of Jubilee" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Leviticus 26–27", n: "Blessings and curses; vows" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Numbers — Wilderness Wanderings", sub: "Numbers", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 1–2", n: "The census; camp arrangement" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 3–4", n: "Levites numbered; their duties" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 5–6", n: "Purity laws; the Nazirite vow; Aaronic blessing" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 7", n: "Offerings of the tribal leaders" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 8–9", n: "Levites set apart; Passover observed; cloud and fire" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 10–11", n: "Silver trumpets; Israel sets out; quail and plague" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 12–13", n: "Miriam and Aaron oppose Moses; spies sent to Canaan" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 14", n: "Israel rebels; forty years of wandering decreed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 15–16", n: "Offering laws; Korah's rebellion" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 17–18", n: "Aaron's staff buds; priestly duties" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 19–20", n: "Red heifer; Moses strikes the rock" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 21", n: "Bronze serpent; victories over Sihon and Og" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 22–23", n: "Balaam and his donkey; first oracles" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 24–25", n: "Balaam's final oracles; Israel's idolatry at Peor" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 26–27", n: "Second census; daughters of Zelophehad; Joshua appointed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 28–29", n: "Daily and festival offerings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 30–31", n: "Vows; war against Midian" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 32–33", n: "Tribes settle east of Jordan; wilderness journey reviewed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Numbers 34–36", n: "Land boundaries; Levitical cities; daughters of Zelophehad" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Deuteronomy — Moses's Final Words", sub: "Deuteronomy", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 1–2", n: "Moses reviews the wilderness journey" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 3–4", n: "Victories recalled; call to obedience" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 5–6", n: "Ten Commandments repeated; the Shema" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 7–9", n: "Drive out the nations; remember God's grace" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 10–11", n: "Fear and love God; blessings and curses" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 12–14", n: "One worship place; tithing; clean foods" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 15–17", n: "Sabbath year; Passover; kings, priests, prophets" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 18–20", n: "The prophet like Moses; cities of refuge; war laws" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 21–23", n: "Various laws on family and community" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 24–26", n: "Justice; firstfruits; covenant renewal" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 27–28", n: "Ceremony at Shechem; blessings and curses" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 29–30", n: "Covenant renewed; 'Choose life'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 31–32", n: "Joshua commissioned; Song of Moses" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Deuteronomy 33–34", n: "Moses blesses the tribes; death of Moses" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Conquest of Canaan", sub: "Joshua", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 1–2", n: "Joshua commissioned; Rahab hides the spies" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 3–4", n: "Crossing the Jordan; memorial stones" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 5–6", n: "Circumcision at Gilgal; fall of Jericho" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 7–8", n: "Achan's sin; Ai defeated" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 9–10", n: "Gibeonite deception; sun stands still" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 11–12", n: "Northern campaign; list of defeated kings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 13–14", n: "Land allotted; Caleb's inheritance" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 15–17", n: "Territories for Judah, Ephraim, Manasseh" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 18–19", n: "Remaining territories allotted" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 20–21", n: "Cities of refuge; Levitical cities" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Joshua 22–24", n: "Eastern tribes depart; Joshua's farewell; 'As for me and my house'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "The Judges", sub: "Judges &amp; Ruth", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Judges 1–2", n: "Incomplete conquest; the cycle of sin begins" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Judges 3–4", n: "Othniel, Ehud, and Deborah" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Judges 5–6", n: "Song of Deborah; Gideon called" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Judges 7–8", n: "Gideon's 300; victory over Midian" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Judges 9–10", n: "Abimelech's treachery; minor judges" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Judges 11–12", n: "Jephthah's vow; conflict with Ephraim" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Judges 13–14", n: "Samson's birth and marriage" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Judges 15–16", n: "Samson's exploits; Delilah; death at Gaza" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Judges 17–18", n: "Micah's idol; Dan's migration" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Judges 19–21", n: "Levite's concubine; civil war against Benjamin" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ruth 1–2", n: "Ruth and Naomi; Ruth gleans in Boaz's field" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ruth 3–4", n: "The kinsman-redeemer; Ruth and Boaz marry" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Samuel &amp; Saul — The First King", sub: "1 Samuel", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 1–2", n: "Hannah's prayer; Samuel born and dedicated" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 3–4", n: "God calls Samuel; Ark captured by Philistines" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 5–7", n: "Ark among Philistines; returned to Israel; revival" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 8–9", n: "Israel demands a king; Saul chosen" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 10–11", n: "Saul anointed; victory over Ammon" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 12–13", n: "Samuel's farewell; Saul's disobedience" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 14", n: "Jonathan's daring; Saul's rash oath" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 15", n: "Saul rejected as king; 'To obey is better than sacrifice'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 16–17", n: "David anointed; David and Goliath" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 18–19", n: "David and Jonathan; Saul's jealousy grows" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 20–21", n: "David and Jonathan's covenant; David flees" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 22–23", n: "David at Adullam; Saul slaughters priests" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 24–25", n: "David spares Saul; Abigail's wisdom" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 26–27", n: "David spares Saul again; among the Philistines" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Samuel 28–31", n: "Witch of Endor; Saul's death at Gilboa" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Psalms of David — Early Life", sub: "Selected Psalms written during David's early years", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 59; 56; 34; 142", n: "Psalms from Saul's pursuit of David" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 57; 52; 54; 63", n: "Psalms from the cave and wilderness period" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 18; 30; 41", n: "Deliverance and thanksgiving" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "David's Reign", sub: "2 Samuel 1–12", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 1–2", n: "David mourns Saul; made king over Judah" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 3–4", n: "War between houses; Abner and Ish-bosheth killed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 5–6", n: "David king over all Israel; Ark brought to Jerusalem" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 7", n: "God's covenant with David — eternal throne" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 8–9", n: "David's victories; kindness to Mephibosheth" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 10–11", n: "Ammonite war; David and Bathsheba" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 12", n: "Nathan's rebuke; David's repentance; Solomon born" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Psalms of David — Royal Psalms", sub: "Psalms from David's reign", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 2; 21; 45; 72", n: "Royal and Messianic psalms" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 32; 51", n: "Psalms of repentance — after Bathsheba" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 1; 15; 19; 24", n: "Psalms of wisdom and God's law" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 22; 23; 27", n: "The Shepherd Psalm; lament and trust" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 46; 48; 76; 84", n: "Songs of Zion" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 103; 104", n: "God's love and the glory of creation" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 105; 106", n: "Israel's history rehearsed in praise" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Absalom's Rebellion &amp; David's Later Years", sub: "2 Samuel 13–24; 1 Chronicles", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 13–14", n: "Amnon and Tamar; Absalom's revenge and return" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 15–16", n: "Absalom's coup; David flees Jerusalem" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 17–18", n: "Hushai foils Ahithophel; Absalom killed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 19–20", n: "David restored to Jerusalem; Sheba's revolt" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 21–22", n: "Famine; David's song of deliverance" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Samuel 23–24", n: "David's last words; mighty men; the census" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Chronicles 21–22", n: "David's census; preparations for the temple" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Chronicles 23–25", n: "Levitical assignments; temple musicians" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Chronicles 26–29", n: "Gatekeepers; David's final charge; Solomon crowned" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Proverbs &amp; Ecclesiastes", sub: "Wisdom Literature", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Proverbs 1–3", n: "The beginning of wisdom; trust in the Lord" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Proverbs 4–6", n: "A father's counsel; warnings against adultery and laziness" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Proverbs 7–9", n: "Lady Wisdom vs. the adulteress; Wisdom's feast" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Proverbs 10–12", n: "Contrasts of wise and foolish living" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Proverbs 13–15", n: "More proverbs on diligence and humility" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Proverbs 16–18", n: "'Pride goes before a fall'; the tongue" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Proverbs 19–21", n: "Wealth, poverty, and integrity" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Proverbs 22–24", n: "Thirty sayings of the wise" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Proverbs 25–27", n: "Proverbs of Solomon; Agur's words" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Proverbs 28–31", n: "On rulers and society; the excellent wife" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ecclesiastes 1–3", n: "'Vanity of vanities'; a time for everything" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ecclesiastes 4–6", n: "Oppression, toil, and the folly of wealth" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ecclesiastes 7–9", n: "Wisdom, death, and life under the sun" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ecclesiastes 10–12", n: "Folly vs. wisdom; 'Fear God and keep his commands'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Song of Solomon 1–4", n: "The beauty of love — beloved and lover" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Song of Solomon 5–8", n: "'Love is as strong as death'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Solomon's Reign &amp; the Divided Kingdom", sub: "1 Kings 1–16; 2 Chronicles 1–16", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 1–2", n: "Solomon crowned; David's death" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 3–4", n: "Solomon's wisdom; his administration" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 5–6", n: "Building the temple; construction details" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 7–8", n: "Solomon's palace; temple dedicated" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 9–10", n: "God appears again; Queen of Sheba; Solomon's glory" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 11", n: "Solomon's wives lead him astray; kingdom torn" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 12–13", n: "Kingdom divides; Jeroboam's golden calves" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 14–15", n: "Jeroboam condemned; Rehoboam and Abijam" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 16", n: "Omri and Ahab; wickedness deepens in Israel" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Elijah &amp; Elisha", sub: "1 Kings 17 – 2 Kings 13", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 17–18", n: "Elijah and the drought; Mount Carmel showdown" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 19", n: "Elijah flees; the still small voice; Elisha called" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 20–21", n: "Ahab's wars; Naboth's vineyard" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Kings 22; 2 Kings 1", n: "Ahab's death; Elijah and Ahaziah" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 2–3", n: "Elijah taken to heaven; Elisha's first miracles" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 4–5", n: "Widow's oil; Shunammite's son; Naaman healed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 6–7", n: "Floating axhead; Syrian army blinded; siege lifted" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 8–9", n: "Shunammite's land restored; Jehu anointed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 10–11", n: "Jehu's purge; Athaliah and Joash" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 12–13", n: "Joash repairs temple; Elisha's death" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "The Writing Prophets — 8th Century", sub: "Amos, Hosea, Jonah, Micah, Isaiah", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Amos 1–3", n: "Judgment on the nations and on Israel" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Amos 4–6", n: "'Prepare to meet your God'; woe to the complacent" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Amos 7–9", n: "Visions of judgment; restoration promised" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Hosea 1–3", n: "Hosea's marriage — a picture of God's love for unfaithful Israel" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Hosea 4–7", n: "Charges against Israel; 'I desire mercy, not sacrifice'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Hosea 8–11", n: "'When Israel was a child'; sin and coming exile" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Hosea 12–14", n: "Return to the Lord; final promise of restoration" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jonah 1–4", n: "Jonah flees; swallowed; Nineveh repents; God's compassion" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Micah 1–3", n: "Judgment on Samaria and Jerusalem" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Micah 4–5", n: "Future peace; ruler from Bethlehem" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Micah 6–7", n: "'Act justly, love mercy, walk humbly'; hope in God" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 1–3", n: "Isaiah's opening — vision of judgment and redemption" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 4–6", n: "Song of the vineyard; Isaiah's call — 'Holy, holy, holy'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 7–9", n: "Immanuel prophecy; 'A child is born, a son is given'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 10–12", n: "Woe to Assyria; Branch from Jesse; song of praise" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 13–17", n: "Oracles against Babylon, Assyria, Philistia, Moab, Syria" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 18–23", n: "Oracles against Egypt, Ethiopia, and other nations" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 24–27", n: "The Isaiah Apocalypse; God's final triumph" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 28–31", n: "Woes to Ephraim, Jerusalem, and those who trust Egypt" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 32–35", n: "The righteous king; redemption of Zion" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Fall of Israel &amp; Hezekiah", sub: "2 Kings 14–20; 2 Chronicles 26–32", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 14–15", n: "Israel's final kings; Tiglath-Pileser invades" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 16–17", n: "Ahaz and Assyria; fall of Samaria — Israel exiled" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 18–19", n: "Hezekiah's reforms; Sennacherib's invasion" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 20", n: "Hezekiah's illness; envoys from Babylon" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 36–39", n: "Historical parallel: Sennacherib, Hezekiah's recovery" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Isaiah — The Book of Comfort", sub: "Isaiah 40–66", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 40–41", n: "'Comfort, comfort my people'; 'I am the Lord your God'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 42–43", n: "First Servant Song; 'I am doing a new thing'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 44–45", n: "No god but God; Cyrus named as deliverer" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 46–48", n: "Babylon's gods fall; Israel refined in the furnace" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 49–50", n: "Second and Third Servant Songs" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 51–53", n: "Awake, O Zion; the Suffering Servant — pierced for our transgressions" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 54–56", n: "Zion restored; everlasting covenant; house of prayer for all nations" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 57–59", n: "True fasting; sin separates but God will intervene" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 60–62", n: "'Arise, shine'; the Spirit of the Lord upon me" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Isaiah 63–66", n: "God's vengeance and compassion; new heavens and earth" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Judah's Final Kings &amp; Jeremiah", sub: "2 Kings 21–25; Jeremiah", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 21–22", n: "Manasseh's evil; Josiah finds the Book of the Law" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 23", n: "Josiah's great reforms; his death" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Kings 24–25", n: "Babylon invades; Jerusalem falls; exile begins" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 1–3", n: "Jeremiah's call; Israel's unfaithfulness" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 4–6", n: "Invasion from the north; judgment announced" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 7–9", n: "Temple sermon; 'Has this house become a den of robbers?'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 10–13", n: "Idols vs. the living God; the linen belt" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 14–17", n: "Drought and lament; the potter and clay" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 18–20", n: "Jeremiah persecuted; 'Cursed be the day I was born'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 21–24", n: "Kings rebuked; the good and bad figs" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 25–26", n: "Seventy years of exile; Jeremiah on trial" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 27–29", n: "Yoke of Babylon; letter to the exiles — 'plans to prosper you'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 30–31", n: "Book of Comfort; new covenant promise" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 32–33", n: "Jeremiah buys a field; the Branch of righteousness" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 34–36", n: "Zedekiah warned; scroll burned by Jehoiakim" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 37–39", n: "Jeremiah imprisoned; Jerusalem falls; he is freed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 40–43", n: "Gedaliah's assassination; remnant flees to Egypt" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 44–46", n: "Warnings to those in Egypt; oracle against Egypt" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 47–50", n: "Oracles against Philistia, Moab, Ammon, Edom" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Jeremiah 51–52", n: "Babylon's fall announced; Jerusalem's fall reviewed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Lamentations 1–2", n: "Grief over Jerusalem's destruction" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Lamentations 3–5", n: "'Great is your faithfulness'; plea for restoration" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Ezekiel — Exile &amp; Restoration", sub: "Ezekiel", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 1–3", n: "Ezekiel's vision of God's glory; his call" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 4–7", n: "Sign-acts of siege; judgment on Israel" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 8–11", n: "Abominations in the temple; God's glory departs" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 12–14", n: "Exile enacted; false prophets condemned" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 15–17", n: "Vine and eagle parables; unfaithful Jerusalem" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 18–19", n: "Individual responsibility; lament for Israel's princes" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 20–22", n: "Israel's history of rebellion; sins of Jerusalem" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 23–24", n: "Two adulterous sisters; Ezekiel's wife dies" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 25–28", n: "Oracles against surrounding nations; Tyre's fall" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 29–32", n: "Oracles against Egypt" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 33–34", n: "Ezekiel the watchman; shepherds and the flock" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 35–36", n: "Against Edom; new heart and new spirit promised" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 37", n: "Valley of dry bones; two sticks become one" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 38–39", n: "Gog and Magog; God's glory among the nations" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 40–42", n: "Vision of the new temple — measurements" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 43–45", n: "God's glory returns; altar and festivals" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezekiel 46–48", n: "River from the temple; division of the land" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Daniel — Exile &amp; Apocalypse", sub: "Daniel", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Daniel 1–2", n: "Daniel in Babylon; Nebuchadnezzar's dream statue" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Daniel 3–4", n: "Fiery furnace; Nebuchadnezzar's pride and humbling" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Daniel 5–6", n: "Handwriting on the wall; Daniel in the lions' den" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Daniel 7–8", n: "Four beasts; the Ancient of Days; the ram and goat" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Daniel 9", n: "Daniel's prayer; seventy weeks prophecy" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Daniel 10–12", n: "Final vision; time of distress; resurrection promised" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Psalms of Exile &amp; Lament", sub: "Psalms written during or reflecting exile", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 42–43; 44; 74", n: "Longing for God; lament over national defeat" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 79; 80; 85; 89", n: "Prayers for restoration; God's covenant with David" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 119:1–88", n: "The great psalm of God's Word — first half" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 119:89–176", n: "The great psalm of God's Word — second half" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 120–128", n: "Songs of Ascents — journeying to Jerusalem" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 129–134", n: "More Songs of Ascents" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 135–137", n: "'By the rivers of Babylon'; praise and lament" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Return from Exile", sub: "Ezra, Nehemiah, Esther, Haggai, Zechariah, Malachi", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezra 1–3", n: "Cyrus's decree; first return; temple foundation laid" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezra 4–6", n: "Opposition; temple completed under Darius" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Haggai 1–2", n: "'Build my house'; God's promised glory" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Zechariah 1–4", n: "Eight night visions; Joshua the high priest" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Zechariah 5–8", n: "Flying scroll; woman in a basket; four chariots; 'truth and peace'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Zechariah 9–11", n: "King coming on a donkey; thirty pieces of silver" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Zechariah 12–14", n: "Jerusalem besieged; Spirit of grace; the Lord will be king" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezra 7–8", n: "Ezra returns with more exiles; the law restored" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ezra 9–10", n: "Intermarriage crisis; covenant renewed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Nehemiah 1–3", n: "Nehemiah's prayer; journey to Jerusalem; walls rebuilt" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Nehemiah 4–6", n: "Opposition and perseverance; wall completed in 52 days" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Nehemiah 7–8", n: "Genealogy of returnees; Ezra reads the Law" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Nehemiah 9–10", n: "Great prayer of confession; covenant signed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Nehemiah 11–13", n: "Repopulating Jerusalem; Nehemiah's reforms" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Esther 1–3", n: "Esther becomes queen; Haman's plot" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Esther 4–6", n: "'For such a time as this'; Mordecai honored" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Esther 7–10", n: "Haman hanged; the Jews delivered; Purim established" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Malachi 1–2", n: "Corrupt priests; faithless people" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Malachi 3–4", n: "'Return to me'; the coming messenger; 'sun of righteousness'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Psalm 146–150", n: "The final Hallel — 'Let everything praise the Lord!'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1">];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// ─── NT DATA ──────────────────────────────────────────────────────────────────</span></p>
+<p class="p1"><span class="s1">const ntPlan = [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "The Birth &amp; Preparation of Jesus", sub: "~6–4 BC – AD 29", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 1:1–4; John 1:1–18", n: "Luke's prologue &amp; John's eternal Word" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 1:5–25", n: "Angel announces John the Baptist's birth" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 1:26–56", n: "The Annunciation; Mary's Magnificat" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 1:57–80", n: "Birth of John the Baptist; Zechariah's song" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 1:1–17; Luke 3:23–38", n: "Genealogies of Jesus" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 1:18–25", n: "Joseph's dream; Jesus's birth announced" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 2:1–20", n: "The birth of Jesus; shepherds &amp; angels" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 2:21–38", n: "Presentation at the temple; Simeon &amp; Anna" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 2:1–12", n: "The Magi visit from the East" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 2:13–23", n: "Flight to Egypt; return to Nazareth" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 2:39–52", n: "Jesus as a boy in the temple" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "John's Ministry &amp; Jesus's Baptism", sub: "AD 29", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 3:1–20; Mark 1:1–8", n: "John the Baptist's ministry" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 3:13–17; Mark 1:9–11; Luke 3:21–22", n: "Baptism of Jesus" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 4:1–11; Mark 1:12–13; Luke 4:1–13", n: "Temptation of Jesus" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 1:19–51", n: "John's testimony; first disciples called" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 2:1–12", n: "Wedding at Cana — first miracle" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Early Judean Ministry", sub: "AD 29–30", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 2:13–25", n: "Jesus clears the temple (first time)" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 3:1–21", n: "Jesus and Nicodemus — 'born again'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 3:22–36", n: "John the Baptist's final testimony" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 4:1–42", n: "The woman at the well in Samaria" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 4:43–54", n: "Healing the official's son" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 4:14–30", n: "Jesus rejected at Nazareth" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Galilean Ministry Begins", sub: "AD 30", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 1:14–20; Matthew 4:12–22", n: "Jesus begins preaching; calls fishermen" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 1:21–39; Luke 4:31–44", n: "Capernaum synagogue; many healings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 5:1–11", n: "Miraculous catch of fish; Peter's call" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 1:40–2:12; Luke 5:12–26", n: "Leper healed; paralytic lowered through roof" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 2:13–22; Luke 5:27–39", n: "Calling of Levi; question about fasting" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 5:1–47", n: "Healing at the pool of Bethesda; Jesus's authority" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 2:23–3:12; Luke 6:1–11", n: "Sabbath controversies" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "The Sermon on the Mount &amp; Early Miracles", sub: "AD 30", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 3:13–19; Luke 6:12–16", n: "Jesus appoints the Twelve Apostles" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 5:1–16", n: "Beatitudes; salt and light" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 5:17–48", n: "Jesus fulfills the Law; 'You have heard it said…'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 6:1–18", n: "Giving, prayer (Lord's Prayer), fasting" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 6:19–34", n: "Treasures, worry, seeking God's kingdom" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 7:1–29", n: "Judging, prayer, narrow gate; house on the rock" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 6:17–49", n: "Luke's Sermon on the Plain" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 7:1–17", n: "Centurion's servant healed; widow's son raised" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 7:18–35; Matthew 11:2–19", n: "John's messengers; testimony about John" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 7:36–50", n: "Woman anoints Jesus at Simon's house" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 8:1–21; Mark 3:20–35", n: "Women disciples; Parable of the Sower" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Parables &amp; Mighty Works", sub: "AD 30–31", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 13:1–23; Mark 4:1–20", n: "Parable of the Sower explained" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 4:21–34; Matthew 13:24–53", n: "Parables of the Kingdom" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 4:35–5:20; Luke 8:22–39", n: "Storm stilled; Gerasene demoniac healed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 5:21–43; Luke 8:40–56", n: "Jairus's daughter raised; woman healed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 9:27–34; Mark 6:1–6; Matthew 13:54–58", n: "Miracles; rejected at Nazareth" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 9:35–10:15; Mark 6:7–13; Luke 9:1–6", n: "Mission of the Twelve" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 6:14–29; Matthew 14:1–12", n: "Death of John the Baptist" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 6:30–44; John 6:1–15; Luke 9:10–17", n: "Feeding of the 5,000" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 6:45–56; John 6:16–21; Matthew 14:22–36", n: "Jesus walks on water" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 6:22–71", n: "Bread of Life discourse" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Expanding Ministry &amp; Opposition Grows", sub: "AD 31", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 7:1–23; Matthew 15:1–20", n: "Traditions of the elders; what defiles" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 7:24–37; Matthew 15:21–31", n: "Syrophoenician woman; healings continue" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 8:1–21; Matthew 15:32–16:12", n: "Feeding of 4,000; Pharisees demand a sign" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 8:22–9:1; Matthew 16:13–28; Luke 9:18–27", n: "Peter's confession; 'Take up your cross'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 9:2–29; Matthew 17:1–21; Luke 9:28–43", n: "Transfiguration; demon-possessed boy" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 9:30–50; Matthew 17:22–18:9", n: "Passion prediction; true greatness" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 18:10–35", n: "Parables of lost sheep and unforgiving servant" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 7:1–53", n: "Jesus at the Feast of Tabernacles" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 8:1–30", n: "Woman caught in adultery; 'I am the light'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 8:31–59", n: "'Before Abraham was, I AM'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 9:1–41", n: "Healing the man born blind" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 10:1–42", n: "The Good Shepherd; Feast of Dedication" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Perean Ministry &amp; Journey to Jerusalem", sub: "AD 31–32", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 9:51–10:24", n: "Journey begins; 72 sent out; Good Samaritan" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 10:25–42", n: "Good Samaritan; Mary and Martha" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 11:1–13", n: "Lord's Prayer (Luke's version); ask, seek, knock" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 11:14–54", n: "Beelzebul controversy; woes to Pharisees" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 12:1–34", n: "Fear God; rich fool; do not worry" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 12:35–59", n: "Be ready; division, reading the times" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 13:1–21", n: "Repent or perish; crippled woman healed; mustard seed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 13:22–14:24", n: "Narrow door; lament over Jerusalem; feast parables" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 14:25–15:10", n: "Cost of discipleship; lost sheep &amp; coin" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 15:11–32", n: "Parable of the Prodigal Son" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 16:1–31", n: "Dishonest manager; rich man and Lazarus" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 17:1–19", n: "Sin, faith, duty; ten lepers cleansed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 17:20–18:8", n: "Kingdom's coming; unjust judge parable" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 18:9–30; Mark 10:1–31; Matthew 19:1–30", n: "Pharisee &amp; tax collector; rich young ruler" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Lazarus &amp; Final Approach to Jerusalem", sub: "AD 32", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 11:1–44", n: "Raising of Lazarus" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 11:45–57", n: "Sanhedrin plots Jesus's death" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 18:31–19:10; Mark 10:32–52", n: "Third passion prediction; Bartimaeus; Zacchaeus" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 20:1–34", n: "Workers in vineyard; mother's request; two blind men" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 19:11–27", n: "Parable of the ten minas" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 12:1–11", n: "Mary anoints Jesus at Bethany" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Passion Week — Entry to Tuesday Controversies", sub: "AD 33 (Nisan 9–12)", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 21:1–17; Mark 11:1–11; Luke 19:28–46; John 12:12–19", n: "Triumphal Entry; temple cleared" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 11:12–26; Matthew 21:18–22", n: "Fig tree cursed; mountain-moving faith" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 12:20–50", n: "Greeks seek Jesus; Father glorifies Son" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 11:27–12:12; Matthew 21:23–46; Luke 20:1–19", n: "Authority questioned; wicked tenants" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 12:13–34; Matthew 22:15–40; Luke 20:20–40", n: "Taxes to Caesar; greatest commandment" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Mark 12:35–44; Matthew 22:41–23:12; Luke 20:41–21:4", n: "Whose son is Christ? Widow's offering" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 23:13–39", n: "Seven woes to scribes and Pharisees" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 24:1–35; Mark 13:1–31; Luke 21:5–33", n: "Olivet Discourse — signs of the end" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 24:36–25:13; Mark 13:32–37; Luke 21:34–38", n: "No one knows the hour; ten virgins" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 25:14–46", n: "Talents; sheep and goats" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Passion Week — The Last Supper", sub: "AD 33 (Nisan 13–14)", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 26:1–16; Mark 14:1–11; Luke 22:1–6", n: "Plot to kill Jesus; Judas agrees to betray" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 26:17–30; Mark 14:12–26; Luke 22:7–30", n: "Preparation; Last Supper instituted" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 13:1–30", n: "Jesus washes feet; Judas identified" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 13:31–14:31", n: "'I am the way'; promise of the Spirit" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 15:1–16:4", n: "True vine; world's hatred" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 16:5–33", n: "Work of the Spirit; 'I have overcome the world'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 17:1–26", n: "Jesus's High Priestly Prayer" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 22:31–38; Matthew 26:31–35; Mark 14:27–31", n: "Peter's denial foretold" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Arrest, Trial &amp; Crucifixion", sub: "AD 33 (Nisan 14–15)", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 26:36–56; Mark 14:32–52; Luke 22:39–53; John 18:1–12", n: "Gethsemane; arrest" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 26:57–75; Mark 14:53–72; Luke 22:54–71; John 18:13–27", n: "Jewish trial; Peter denies Jesus" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 27:1–26; Mark 15:1–15; Luke 23:1–25; John 18:28–19:16", n: "Pilate's trial; Barabbas" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 27:27–44; Mark 15:16–32; Luke 23:26–43; John 19:17–27", n: "Crucifixion; 'Father forgive them'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 27:45–56; Mark 15:33–41; Luke 23:44–49; John 19:28–37", n: "Death of Jesus; curtain torn" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 27:57–66; Mark 15:42–47; Luke 23:50–56; John 19:38–42", n: "Burial of Jesus" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Resurrection &amp; Appearances", sub: "AD 33", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 28:1–15; Mark 16:1–8; Luke 24:1–12; John 20:1–10", n: "Empty tomb discovered" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 20:11–18; Mark 16:9–11", n: "Jesus appears to Mary Magdalene" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 28:9–10; Luke 24:13–35", n: "Women encounter Jesus; road to Emmaus" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Luke 24:36–49; John 20:19–23; Mark 16:14", n: "Jesus appears to the disciples" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 20:24–31", n: "Thomas sees and believes" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "John 21:1–25", n: "Breakfast on the shore; Peter restored" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Matthew 28:16–20; Mark 16:15–20; Luke 24:44–53; Acts 1:1–11", n: "Great Commission; Ascension" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "The Church Begins — Acts &amp; Pentecost", sub: "AD 33", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 1:12–26", n: "Matthias chosen to replace Judas" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 2:1–21", n: "Pentecost; Holy Spirit poured out" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 2:22–47", n: "Peter's sermon; 3,000 baptized; early church life" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 3:1–26", n: "Lame man healed; Peter preaches at the temple" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 4:1–31", n: "Peter and John arrested; prayer for boldness" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 4:32–5:16", n: "All things in common; Ananias &amp; Sapphira" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 5:17–42", n: "Apostles imprisoned, freed, flogged — still rejoicing" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 6:1–15", n: "Seven chosen; Stephen seized" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 7:1–53", n: "Stephen's speech" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 7:54–8:25", n: "Stephen martyred; Philip in Samaria" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 8:26–40", n: "Philip and the Ethiopian eunuch" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Saul's Conversion &amp; Early Church Growth", sub: "AD 34–46", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 9:1–31", n: "Saul's conversion on the Damascus road" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 9:32–10:23", n: "Peter heals Aeneas; Cornelius's vision" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 10:24–11:18", n: "Gentiles receive the Spirit" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 11:19–12:25", n: "Antioch church; Herod kills James; Peter freed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Galatians 1–2", n: "Paul's gospel by revelation; confronts Peter" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Paul's First Missionary Journey &amp; Galatians", sub: "AD 47–49", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 13:1–52", n: "Sent from Antioch; Pisidian Antioch sermon" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 14:1–28", n: "Iconium, Lystra, Derbe; return to Antioch" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Galatians 3–4", n: "Faith not law; sons of God" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Galatians 5–6", n: "Freedom in Christ; fruit of the Spirit" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 15:1–35", n: "Jerusalem Council" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Paul's Second Journey &amp; Thessalonians", sub: "AD 49–51", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 15:36–16:40", n: "Silas joins; Timothy; Lydia; Philippian jailer" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 17:1–18:11", n: "Thessalonica, Berea, Athens, Corinth" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Thessalonians 1–3", n: "Thanksgiving; Paul's conduct; Timothy's report" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Thessalonians 4–5", n: "Holy living; dead in Christ; Day of the Lord" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Thessalonians 1–3", n: "Persecution; man of lawlessness; the idle must work" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Paul's Third Journey &amp; Corinthian Letters", sub: "AD 52–56", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 18:12–19:41", n: "Ephesus; Apollos; riot of silversmiths" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Corinthians 1–4", n: "Divisions; wisdom of the cross; stewards of mysteries" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Corinthians 5–7", n: "Sexual sin; lawsuits; marriage and singleness" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Corinthians 8–10", n: "Food to idols; rights surrendered; Israel's warnings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Corinthians 11–12", n: "Lord's Supper; spiritual gifts; one body" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Corinthians 13–14", n: "Love is supreme; prophecy and tongues" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Corinthians 15–16", n: "Resurrection — the heart of the gospel" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Corinthians 1–4", n: "Comfort; new covenant; treasure in jars of clay" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Corinthians 5–7", n: "Ministry of reconciliation; godly grief" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Corinthians 8–10", n: "Cheerful giving; Paul defends his apostleship" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Corinthians 11–13", n: "Boasting in weakness; thorn in the flesh" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Romans", sub: "AD 57, from Corinth", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Romans 1–2", n: "The gospel's power; all have sinned" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Romans 3–4", n: "Righteousness through faith; Abraham justified" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Romans 5–6", n: "Peace with God; dead to sin, alive to God" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Romans 7–8:17", n: "Struggle with sin; life in the Spirit" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Romans 8:18–39", n: "Future glory; nothing separates us from God's love" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Romans 9–10", n: "Israel and election; call on the Lord" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Romans 11–12", n: "All Israel saved; living sacrifice" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Romans 13–16", n: "Submit to authority; accept the weak; final greetings" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Paul Arrested — Journey to Rome", sub: "AD 57–60", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 20–21:36", n: "Farewell to Ephesus; Paul arrested in Jerusalem" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 21:37–23:35", n: "Paul's defense; Sanhedrin; sent to Felix" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 24–26", n: "Before Felix, Festus, and Agrippa" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Acts 27–28", n: "Shipwreck; Malta; Rome — preaching unhindered" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Prison Epistles", sub: "AD 60–62, from Rome", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ephesians 1–3", n: "Every blessing; dead made alive; mystery revealed" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Ephesians 4–6", n: "Unity; armor of God; husbands and wives" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Philippians 1–2", n: "Joy in chains; humility of Christ" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Philippians 3–4", n: "Press toward the goal; 'I can do all things'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Colossians 1–2", n: "Supremacy of Christ; don't be taken captive" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Colossians 3–4; Philemon", n: "New self; Paul's appeal for Onesimus" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "James, Pastoral &amp; General Epistles", sub: "AD 45–68", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "James 1–3", n: "Trials; faith and works; taming the tongue" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "James 4–5", n: "Draw near to God; prayer of faith" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Timothy 1–3", n: "Sound doctrine; overseers and deacons" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Timothy 4–6", n: "Timothy's example; godliness with contentment" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Titus 1–3", n: "Appointing elders; saved by grace; final instructions" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Timothy 1–2", n: "Fan the flame; worker approved by God" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Timothy 3–4", n: "'I have fought the good fight'; Scripture inspired" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Peter 1–3", n: "Living hope; holy living; submission and suffering" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 Peter 4–5; 2 Peter 1", n: "Suffering like Christ; divine nature" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "2 Peter 2–3; Jude", n: "False teachers; Day of the Lord; contend for the faith" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Hebrews", sub: "AD 64–69", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Hebrews 1–3", n: "Son superior to angels and Moses" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Hebrews 4–6", n: "Enter God's rest; high priest like Melchizedek" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Hebrews 7–9", n: "Better covenant; once-for-all sacrifice" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Hebrews 10–11", n: "Draw near; faith's hall of fame" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Hebrews 12–13", n: "Run with endurance; Jesus the same yesterday and today" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>{ era: "Letters of John &amp; Revelation", sub: "AD 85–95, from Ephesus &amp; Patmos", days: [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 John 1–3", n: "Walk in light; love one another; children of God" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "1 John 4–5; 2 John; 3 John", n: "God is love; eternal life in the Son" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Revelation 1–3", n: "Vision of Christ; seven letters to the churches" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Revelation 4–7", n: "Throne room; Lamb receives scroll; seals opened" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Revelation 8–11", n: "Trumpets; two witnesses; seventh trumpet" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Revelation 12–15", n: "Dragon, beasts, Lamb on Mount Zion; bowl preparation" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Revelation 16–18", n: "Seven bowls; Babylon falls" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Revelation 19–20", n: "Word of God rides out; millennium; Great White Throne" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>{ r: "Revelation 21–22", n: "New heavens and earth; 'Come, Lord Jesus'" },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>]},</span></p>
+<p class="p1"><span class="s1">];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// ─── STATE ────────────────────────────────────────────────────────────────────</span></p>
+<p class="p1"><span class="s1">let otChecked = loadChecked('ot_chron_checked');</span></p>
+<p class="p1"><span class="s1">let ntChecked = loadChecked('nt_chron_checked');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// ─── INIT ─────────────────────────────────────────────────────────────────────</span></p>
+<p class="p1"><span class="s1">function uncheckAllOT() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>showModal('Reset Entire OT Plan?', 'This will clear all 250 days of OT progress. This cannot be undone.', function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>otChecked = {};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>saveChecked('ot_chron_checked', otChecked);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>renderOT();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function uncheckAllNT() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>showModal('Reset Entire NT Plan?', 'This will clear all NT progress. This cannot be undone.', function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>ntChecked = {};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>saveChecked('nt_chron_checked', ntChecked);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>renderNT();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function jumpToCurrentOT() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>// Find first unchecked day by scanning otChecked directly</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let total = 0; otPlan.forEach(e =&gt; total += e.days.length);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let targetIdx = -1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>for (let i = 0; i &lt; total; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>if (!otChecked['day_'+i]) { targetIdx = i; break; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (targetIdx === -1) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const rows = document.querySelectorAll('#ot-panel .day-row');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const el = rows[targetIdx];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (!el) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const grid = el.closest('.days-grid');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const header = grid ? grid.previousElementSibling : null;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (grid &amp;&amp; grid.classList.contains('collapsed')) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>grid.classList.remove('collapsed');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>grid.style.maxHeight = '9999px';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>if (header) header.classList.remove('collapsed');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>setTimeout(() =&gt; el.scrollIntoView({behavior:'smooth', block:'center'}), 50);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function jumpToCurrentNT() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let total = 0; ntPlan.forEach(e =&gt; total += e.days.length);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>let targetIdx = -1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>for (let i = 0; i &lt; total; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>if (!ntChecked['day_'+i]) { targetIdx = i; break; }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (targetIdx === -1) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const rows = document.querySelectorAll('#nt-panel .day-row');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const el = rows[targetIdx];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (!el) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const grid = el.closest('.days-grid');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const header = grid ? grid.previousElementSibling : null;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (grid &amp;&amp; grid.classList.contains('collapsed')) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>grid.classList.remove('collapsed');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>grid.style.maxHeight = '9999px';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>if (header) header.classList.remove('collapsed');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>setTimeout(() =&gt; el.scrollIntoView({behavior:'smooth', block:'center'}), 50);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function getEndDate(id) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const val = document.getElementById(id).value;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (!val) return null;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const [y,m,d] = val.split('-').map(Number);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>return new Date(y, m-1, d);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function defaultEndDate(startDateId) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const start = getDate(startDateId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const end = addDays(start, 364); // 365 days inclusive</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>return end.toISOString().split('T')[0];</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function initEndDate(startId, endId) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const endEl = document.getElementById(endId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>if (!endEl.value) endEl.value = defaultEndDate(startId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>// When start date changes, nudge end date to maintain 365-day default only if user hasn't customized it</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById(startId).addEventListener('change', function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>// Only auto-update if the gap is still ~365 days (user hasn't customized)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const currentEnd = getEndDate(endId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>const currentStart = getDate(startId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>if (!currentEnd) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>endEl.value = defaultEndDate(startId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>const gap = Math.round((currentEnd - addDays(currentStart, -1)) / 86400000);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">     </span>if (gap === 365) endEl.value = defaultEndDate(startId);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">   </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>});</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function renderOT() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const start = getDate('otStartDate');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const end <span class="Apple-converted-space">  </span>= getEndDate('otEndDate');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const sched = computeSchedule(otPlan, start, end);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('otPaceLabel').textContent = paceLabel(otPlan, start, end);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>renderPlan(otPlan, otChecked, 'ot_chron_checked', start, 'otPlanContainer', 'otProgressFill', 'otProgressText', sched);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">function renderNT() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const start = getDate('ntStartDate');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const end <span class="Apple-converted-space">  </span>= getEndDate('ntEndDate');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>const sched = computeSchedule(ntPlan, start, end);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>document.getElementById('ntPaceLabel').textContent = paceLabel(ntPlan, start, end);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>renderPlan(ntPlan, ntChecked, 'nt_chron_checked', start, 'ntPlanContainer', 'ntProgressFill', 'ntProgressText', sched);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById('otStartDate').addEventListener('change', renderOT);</span></p>
+<p class="p1"><span class="s1">document.getElementById('ntStartDate').addEventListener('change', renderNT);</span></p>
+<p class="p1"><span class="s1">document.getElementById('otEndDate').addEventListener('change', renderOT);</span></p>
+<p class="p1"><span class="s1">document.getElementById('ntEndDate').addEventListener('change', renderNT);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">initEndDate('otStartDate', 'otEndDate');</span></p>
+<p class="p1"><span class="s1">initEndDate('ntStartDate', 'ntEndDate');</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">renderOT();</span></p>
+<p class="p1"><span class="s1">renderNT();</span></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
